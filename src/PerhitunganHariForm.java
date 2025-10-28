@@ -28,6 +28,11 @@ public class PerhitunganHariForm extends javax.swing.JFrame {
 
         spinnerTahun.setModel(new javax.swing.SpinnerNumberModel(2025, 1, null, 1));
         spinnerTahun.setName("spinTahun"); // NOI18N
+        spinnerTahun.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spinnerTahunStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Pilih Bulan");
 
@@ -130,6 +135,7 @@ public class PerhitunganHariForm extends javax.swing.JFrame {
     private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
     int bulanIndex = comboBulan.getSelectedIndex() + 1;
     int tahun = (int) spinnerTahun.getValue();
+    
 
     // Gunakan API modern untuk hitung jumlah hari
     java.time.YearMonth yearMonth = java.time.YearMonth.of(tahun, bulanIndex);
@@ -137,6 +143,21 @@ public class PerhitunganHariForm extends javax.swing.JFrame {
 
     lblHasil.setText("Jumlah Hari: " + jumlahHari + " hari");
     }//GEN-LAST:event_btnHitungActionPerformed
+
+    
+    //Membuat fungsi untuk Jspinner ChanegeListener
+    private void updateKalenderDariInput() {
+    int bulanIndex = comboBulan.getSelectedIndex();
+    int tahun = (int) spinnerTahun.getValue();
+
+    java.util.Calendar cal = new java.util.GregorianCalendar(tahun, bulanIndex, 1);
+    calendar.setCalendar(cal);
+    }
+    
+    private void spinnerTahunStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinnerTahunStateChanged
+       // Saat tahun berubah, sinkronkan kalender
+    updateKalenderDariInput();
+    }//GEN-LAST:event_spinnerTahunStateChanged
 
  
     public static void main(String args[]) {
